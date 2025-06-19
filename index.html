@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Access Terminal - Agent Aldi Wibowo</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: black;
+      color: #00ff00;
+      font-family: monospace;
+      overflow: hidden;
+    }
+    .center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+    }
+    #login {
+      display: block;
+    }
+    #terminal {
+      display: none;
+      padding: 20px;
+    }
+    input[type="password"] {
+      background: black;
+      color: #00ff00;
+      border: 1px solid #00ff00;
+      padding: 10px;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+    #matrix {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+    img.logo {
+      width: 120px;
+      margin-bottom: 20px;
+    }
+    pre {
+      background: black;
+      padding: 20px;
+      border: 1px solid #00ff00;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="matrix"></canvas>
+  <div class="center" id="login">
+    <img src="team-secret-logo-png_seeklogo-528984.png" alt="logo" class="logo">
+    <h2>ACCESS TERMINAL - AGENT ALDI WIBOWO</h2>
+    <p>Enter Access Code:</p>
+    <input type="password" id="pass" placeholder="Enter password..." onkeydown="checkPass(event)" />
+  </div>
+
+  <div id="terminal">
+    <h2>ACCESS GRANTED</h2>
+    <p>Welcome, Agent Aldi Wibowo</p>
+    <pre>
+Name: Aldi Wibowo
+Clearance Level: TOP SECRET
+Department: Cyber Operations
+ID: AG-8921W
+Status: ACTIVE
+    </pre>
+  </div>
+
+  <audio id="accessSound" src="https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg"></audio>
+
+  <script>
+    const correctPass = "Comeback.911$";
+    function checkPass(e) {
+      if (e.key === "Enter") {
+        const input = document.getElementById("pass").value;
+        if (input === correctPass) {
+          document.getElementById("login").style.display = "none";
+          document.getElementById("terminal").style.display = "block";
+          document.getElementById("accessSound").play();
+        } else {
+          alert("ACCESS DENIED");
+        }
+      }
+    }
+
+    // Matrix Effect
+    const canvas = document.getElementById("matrix");
+    const ctx = canvas.getContext("2d");
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+
+    const columns = canvas.width / 10;
+    const drops = Array(Math.floor(columns)).fill(1);
+
+    function draw() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = "#0F0";
+      ctx.font = "14px monospace";
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = String.fromCharCode(33 + Math.random() * 94);
+        ctx.fillText(text, i * 10, drops[i] * 20);
+
+        if (drops[i] * 20 > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+
+        drops[i]++;
+      }
+    }
+
+    setInterval(draw, 33);
+  </script>
+</body>
+</html>
